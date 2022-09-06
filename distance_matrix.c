@@ -42,11 +42,12 @@ void distance_matrix(double *X, double* distMat, const int row) {
      
 }
 
-
+/*
 int main () {
     int i,j;
     const int col = 3;
-    double dist_Mat[test][test];
+    const int test = 4;
+    double dist_Mat[4][test];
 
     double myArray[test][3];// = { {1, 1, 1}, {2 , 2, 2}, {3, 3, 3}, {4, 4, 4} };
     printf("11myArray is \n");
@@ -68,4 +69,4 @@ int main () {
         }
       }
     }
-}
+}*/

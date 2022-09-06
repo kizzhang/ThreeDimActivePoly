@@ -4,9 +4,13 @@
 #include "ran2.h"
 #include "myparam.h"
 
-void initialize_polymer(double** x, double** v_vec, double** dir_vec, double** angle, long* dvar){
+void initialize_polymer(double x[][3], double v_vec[][3], double dir_vec[][3], double angle[][2]){
     double theta, phi;
     int i; 
+    long dum = -100;
+    long *dvar;
+    dvar=&dum;
+    
     for(i=0; i < NB; i++){
         x[i][0] = (double) i; // A chain on x axis spaced by 1
         x[i][1] = 0.;

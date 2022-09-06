@@ -5,7 +5,7 @@
 #include "myparam.h"
 
 
-void buffer_vecs(double** dir_vec, double** v_vec, double** angle, double** dir_buffer, double** v_buffer, double** a_buffer){
+void buffer_vecs(double dir_vec[][3], double v_vec[][3], double angle[][2], double dir_buffer[][3], double v_buffer[][3], double a_buffer[][2]){
     int i;
 
     for(i=0; i<NB; i++){

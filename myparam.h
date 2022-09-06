@@ -3,9 +3,9 @@
 #define k_spring 1 // CHANGE LATER
 #define gamma 1 // CHANGE LATER
 #define a_force 1 // CHANGE LATER
-#define TS    1000
-#define NB    10000 // time for each iteration
-#define NBmax 30000
+#define TS    3
+#define NB    10 // time for each iteration
+#define NBmax 10
 #define Nstep 1 // iterations
 #define NchainMAX 1000 
 #define Nknottypetotal 257  

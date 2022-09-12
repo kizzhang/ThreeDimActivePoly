@@ -1,11 +1,9 @@
 #ifndef myparam_H_
 #define myparam_H_
-#define k_spring 1 // CHANGE LATER
-#define gamma 1 // CHANGE LATER
-#define a_force 1 // CHANGE LATER
-#define TS    3
+
+#define TS    100
 #define NB    10 // time for each iteration
-#define NBmax 10
+#define NBmax 100
 #define Nstep 1 // iterations
 #define NchainMAX 1000 
 #define Nknottypetotal 257  
@@ -24,8 +22,8 @@
 // define knottype_desired 31
 #define walk_speed  1
 #define walk_noise  0.05
-#define time_step 0.01
+#define time_step 0.0001
 #define rot_diff 0.5
-#define pos_diff 0.03
+#define pos_diff 265.85
 #define radius 1
 #endif

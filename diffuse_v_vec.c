@@ -6,7 +6,6 @@
 
 void diffuse_v_vec(double* dir_vec, double* dir_buffer, double* v_vec, double* vbuffer, double* angle, double* abuffer, double dtheta, double dphi);
 
-
 void diffuse_v_vec(double* dir_vec, double* dir_buffer, double* v_vec, double* vbuffer, double* angle, double* abuffer, double dtheta, double dphi){
     double norm, v_norm;
 
@@ -40,19 +39,5 @@ void diffuse_v_vec(double* dir_vec, double* dir_buffer, double* v_vec, double* v
 
     angle[0] = atan(v_vec[1] / v_vec[0]);
     angle[1] = acos(v_vec[2]);
-
-    /*
-    *(v_vec+time_i) = *(v_vec+time_i) + sin(dtheta) / dtheta * (-1. * dthetaz * *(v_vec+time_i+ NB) + dthetay * *(v_vec+time_i+ NB*2))
-                + (1-cos(dtheta)) / (dtheta * dtheta) * ( (-1. * dthetaz*dthetaz - dthetay*dthetay)*(*v_vec + time_i) +(dthetax*dthetay) * *(v_vec+time_i+ NB) +
-                (dthetax*dthetaz)* *(v_vec+time_i+ NB*2) );
-
-
-    *(v_vec+time_i+ NB) = *(v_vec+time_i+ NB) + sin(dtheta) / dtheta * (dthetaz * *(v_vec+time_i) - dthetax * *(v_vec+time_i+ NB*2))
-                + (1-cos(dtheta)) / (dtheta * dtheta) * ( (dthetax*dthetay)*(*v_vec + time_i) +(-1.*dthetaz*dthetaz - dthetax*dthetax) * *(v_vec+time_i+ NB) +
-                (dthetay*dthetaz)* *(v_vec+time_i+ NB*2) );
-
-    *(v_vec+time_i+ NB*2) = *(v_vec+time_i+ NB*2) + sin(dtheta) / dtheta * (-1.*dthetay * *(v_vec+time_i) + dthetax * *(v_vec+time_i+ NB))
-                + (1-cos(dtheta)) / (dtheta * dtheta) * ( (dthetax*dthetaz)*(*v_vec + time_i) +(dthetay*dthetaz) * *(v_vec+time_i+ NB) +
-                (-1.* dthetax*dthetax -dthetay*dthetay)* *(v_vec+time_i+ NB*2) );*/
 }
 

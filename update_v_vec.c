@@ -20,6 +20,17 @@ void update_v_vec(double dir_vec[][3], double dir_buffer[][3], double v_vec[][3]
     for(i=0; i<NB; i++){
         dtheta[i] = ran2(dvar, 'g') * sqrt(2*rot_diff*time_step);
         dphi[i] = ran2(dvar, 'g') * sqrt(2*rot_diff*time_step);
+        /*printf("v_vec[%d][0] is %lf\n", i, v_vec[i][0]);
+        printf("v_vec[%d][0] is %lf\n", i, v_vec[i][1]);
+        printf("v_vec[%d][2] is %lf\n", i, v_vec[i][2]);
+        printf("angle[%d][0] is %lf\n", i, angle[i][0]);
+        printf("angle[%d][1] is %lf\n", i, angle[i][1]);*/
+
         diffuse_v_vec(dir_vec[i], dir_buffer[i], v_vec[i], vbuffer[i], angle[i], abuffer[i], dtheta[i], dphi[i]);
+        
+        
+        //printf("dtheta[%d] is %lf\n", i, dtheta[i]);
+        //printf("dphi[%d] is %lf\n", i, dphi[i]);
     }
+    
 }

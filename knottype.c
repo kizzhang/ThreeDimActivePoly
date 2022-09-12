@@ -31,9 +31,9 @@ int  add_ends_by_qhull(double x[NBmax][dd], int Lchain, double xnew[NBmax][dd] )
 
     // printf("OK2\n");
 
-    flag_close_type =  hull_ends(x, Lchain,  point1, point2 ) ;
+    flag_close_type =  hull_ends(x, Lchain,  point1, point2) ;
 
-    // printf("type %5d\n", flag_close_type);
+    //printf("type %5d\n", flag_close_type);
 
     if(flag_close_type == 1) {
        for(d=0;d<dd;d++) {
@@ -53,28 +53,24 @@ int  add_ends_by_qhull(double x[NBmax][dd], int Lchain, double xnew[NBmax][dd] )
 }
 
 
-
-
-
 int get_knottype_of_entire_chain(double x[NBmax][dd], int Lchain) {
    int j,k,d,  Lchain_simple, knottype;
    double xnew[NBmax][dd], xsimple[NBmax][dd];
 
-
+   
 
    if(flag_connect_ends_by_a_line == 1) {
       x[NB][0] = x[0][0];  x[NB][1] = x[0][1]; x[NB][2] = x[0][2]; // used for a ring polymer
-
+      printf("Finished!\n\n");
       knottype = get_knottype(x, NB+1);
 
    } else {
-
        // printf("OK1\n");
        if(Lchain<=5) return 0; 
 
        flag_close_type_global  = add_ends_by_qhull(x, Lchain, xnew );
-       // printf("flag_close_type %5d\n", flag_close_type_global);
-
+       //printf("flag_close_type %5d\n", flag_close_type_global);
+      
        if(flag_close_type_global==0) {
            Lchain_simple  =  simplify_conf(xnew, Lchain+1,xsimple);
            knottype       =  get_knottype(xsimple, Lchain_simple);
@@ -83,8 +79,7 @@ int get_knottype_of_entire_chain(double x[NBmax][dd], int Lchain) {
            knottype       =  get_knottype(xsimple, Lchain_simple);
        }
    }
-
-
+   
    return knottype;
 
 }

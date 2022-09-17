@@ -28,7 +28,7 @@ double seuclidean_distance(double *u, double *v, const int n)
 
     for (i = 0; i < n; ++i) {
         const double d = u[i] - v[i];
-        s += (d * d) ;
+        s += pow(d,2) ;
     }
     return sqrt(s);
 }

@@ -1,9 +1,9 @@
 #ifndef myparam_H_
 #define myparam_H_
 
-#define TS    100
-#define NB    10 // time for each iteration
-#define NBmax 100
+#define TS    10 // number of time step
+#define NB   1000 // Particle number
+#define NBmax 1000
 #define Nstep 1 // iterations
 #define NchainMAX 1000 
 #define Nknottypetotal 257  
@@ -20,10 +20,9 @@
 #define Rbox 130.
 #define chiral_speed 0.1
 // define knottype_desired 31
-#define walk_speed  1
 #define walk_noise  0.05
-#define time_step 0.0001
-#define rot_diff 0.5
-#define pos_diff 265.85
+#define time_step 2.3e-6
+#define rot_diff 100
+#define pos_diff 26.85
 #define radius 1
 #endif

@@ -4,7 +4,7 @@
 #include "ran2.h"
 #include "myparam.h"
 
-void initialize_polymer(double x[][3], double v_vec[][3], double dir_vec[][3], double angle[][2]){
+void initialize_polymer(double x[NB][3], double dir_vec[NB][3], double angle[NB][2]){
     double theta, phi;
     int i; 
     long dum = -100;
@@ -25,9 +25,5 @@ void initialize_polymer(double x[][3], double v_vec[][3], double dir_vec[][3], d
         dir_vec[i][0] = sin(theta) * cos(phi);
         dir_vec[i][1] = sin(theta) * sin(phi);
         dir_vec[i][2] = cos(theta);
-
-        v_vec[i][0] = walk_speed * sin(theta) * cos(phi);
-        v_vec[i][1] = walk_speed * sin(theta) * sin(phi);
-        v_vec[i][2] = walk_speed * cos(theta);
     }
 }

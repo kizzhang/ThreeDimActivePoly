@@ -6,6 +6,10 @@
   #include "confinementcheck.h"
   #include "update_position.h"
   #include "initialize_polymer.h"
+  #include "update_v_vec.h"
+  #include "adopt_new_pos.h"
+  #include "buffer_vecs.h"
+  #include"initialize_polymer.h"
 
   // Dai's variable
   double knottable[Nknottypetotal][3];
@@ -21,13 +25,14 @@
     return 1;
   }
   double Dot_product(double* vec1, double* vec2);
-  void initialize_polymer(double x[][3], double v_vec[][3], double dir_vec[][3], double angle[][2]);
-  void update_position(double* dx, double* dy, double* dz, double x[][3], double dir_vec[][3]);
-  void buffer_vecs(double dir_vec[][3], double v_vec[][3], double angle[][2], double dir_buffer[][3], double v_buffer[][3], double a_buffer[][2]);
-  void disp_diffuse(double next_pt[][3], double x[][3], double* dx, double* dy, double* dz);
-  void update_v_vec(double dir_vec[][3], double dir_buffer[][3], double v_vec[][3], double vbuffer[][3], double angle[][2], double abuffer[][2]);
-  void adopt_new_pos(double x[][3], double next_pt[][3]);
-
+  void initialize_polymer(double x[NB][3],  double dir_vec[NB][3], double angle[NB][2]);
+  void update_position(double* dx, double* dy, double* dz, double x[NB][3], double dir_vec[NB][3], double randx_mat[NB][dd]);
+  void buffer_vecs(double dir_vec[NB][3], double angle[NB][2], double dir_buffer[NB][3], double a_buffer[NB][2]);
+  void disp_diffuse(double next_pt[NB][3], double x[NB][3], double* dx, double* dy, double* dz);
+  void update_v_vec(double dir_vec[NB][3], double dir_buffer[NB][3], double angle[NB][2], double abuffer[NB][2], double randv_mat[NB][2]);;
+  void adopt_new_pos(double x[NB][3], double next_pt[NB][3]);
+  void populate_randx_mat(double randx_mat[TS][NB][dd]);
+  void populate_randv_mat(double randv_mat[TS][NB][2]);
   //Dai's functions
   int    get_knottype_of_entire_chain(double x[NBmax][dd], int Lchain); 
   int    get_knottype_of_subchain(double x[NBmax][dd], int ileft, int iright);
@@ -38,7 +43,7 @@
 
   int  main(){
         double x[TS][NB][dd];
-        double v_vec[TS][NB][dd], dir_vec[TS][NB][dd];
+        double dir_vec[TS][NB][dd];
         double angle[TS][NB][2]; // angle[0] = phi ; angle[1] = theta 
         double theta, phi;
         double dtheta[NB], dphi[NB];
@@ -47,7 +52,8 @@
         double next_pt[NB][3];
         double speed_dir[3];
         double intersection_pt[3];
-        double v_buffer[NB][3], dir_buffer[NB][3], a_buffer[NB][2];
+        double dir_buffer[NB][3], a_buffer[NB][2];
+        double randx_mat[TS][NB][dd], randv_mat[TS][NB][2]; // array that records random values for particles
         FILE *walk_traj;
         char* filename[80];
         int intersect_bool;
@@ -86,20 +92,21 @@
           fprintf(walk_traj,"%d\n%d's trial\n",NB,irep);
           num_bounce = 0;
 
-          // Initializing posiiton, angular direction, and velocity 
-          initialize_polymer(x[0], v_vec[0], dir_vec[0], angle[0]);
-        /*  for(i=0;i<NB;i++){
-            printf("x[%d][%d][0] is %lf", irep, i, x[irep][i][0]);
-            printf("x[%d][%d][1] is %lf", irep, i, x[irep][i][1]);
-            printf("x[%d][%d][2] is %lf", irep, i, x[irep][i][2]);
-          }*/
+          // Create matrices for recording random values
+          populate_randx_mat(randx_mat);
+          populate_randv_mat(randv_mat);
+          
+          // Initializing position, angular direction, and velocity 
+          initialize_polymer(x[0], dir_vec[0], angle[0]);
+          
           // NOW WALK
           for(walk_step=1;walk_step<TS;walk_step++){
+            printf("\n\nTHIS IS TIME STEP AT %d", walk_step);
             // Translational diffusion
-            update_position(dx, dy, dz, x[walk_step-1],dir_vec[walk_step-1]);
-
+            update_position(dx, dy, dz, x[walk_step-1],dir_vec[walk_step-1], randx_mat[walk_step]);
+            printf("\nYES!!\n");
             // Save the current velocity and direction; if not reflected, next point's velocity is v_buffer + diffusion
-            buffer_vecs(dir_vec[walk_step-1], v_vec[walk_step-1], angle[walk_step-1], dir_buffer, v_buffer, a_buffer);
+            buffer_vecs(dir_vec[walk_step-1], angle[walk_step-1], dir_buffer, a_buffer);
 
             // Particle moves to next_pt
             disp_diffuse(next_pt, x[walk_step-1], dx, dy, dz);
@@ -119,16 +126,14 @@
             adopt_new_pos(x[walk_step], next_pt);
 
             // Speed angle now is subject to rotational diffusion: Strategy is first to bounce back then diffuse
-            update_v_vec(dir_vec[walk_step], dir_buffer, v_vec[walk_step], v_buffer, angle[walk_step], a_buffer);
-  
+            update_v_vec(dir_vec[walk_step], dir_buffer, angle[walk_step], a_buffer, randv_mat[walk_step]);
+           
             // Record the positions into the trajectory file
             fprintf(walk_traj,"%d\n",walk_step);
             for(i=0;i<NB;i++){
-              //printf("%d\t%10lf\t%10lf\t%10lf\n",i,x[walk_step-1][i][0],x[walk_step-1][i][1],x[walk_step-1][i][2]);
               fprintf(walk_traj,"%d\t%10lf\t%10lf\t%10lf\n",i,x[walk_step-1][i][0],x[walk_step-1][i][1],x[walk_step-1][i][2]);
             }
-
-          }        
+          }
         //printf("Walkstep is %lf", walk_step);
         // Save the last position
         fprintf(walk_traj,"%d\n",TS);

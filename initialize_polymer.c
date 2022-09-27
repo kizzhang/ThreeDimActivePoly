@@ -12,7 +12,7 @@ void initialize_polymer(double x[NB][3], double dir_vec[NB][3], double angle[NB]
     dvar=&dum;
     
     for(i=0; i < NB; i++){
-        x[i][0] = (double) i; // A chain on x axis spaced by 1
+        x[i][0] = 2* sigma* (double) i; // A chain on x axis spaced by 1
         x[i][1] = 0.;
         x[i][2] = 0.;
 

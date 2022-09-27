@@ -5,10 +5,10 @@
 #include "myparam.h"
 
 
-void adopt_new_pos(double x[NB][3], double next_pt[NB][3]);
+void adopt_new_pos(double x[NB][dd], double next_pt[NB][dd]);
 
 
-void adopt_new_pos(double x[NB][3], double next_pt[NB][3]){
+void adopt_new_pos(double x[NB][dd], double next_pt[NB][dd]){
     int i;
 
 
